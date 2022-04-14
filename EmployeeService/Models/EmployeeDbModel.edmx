@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EmployeeDb.dbo.SW_TBL_EMPLOYEE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SW_TBL_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpName" Type="varchar" MaxLength="250" />
+          <Property Name="Salary" Type="float" />
+        </EntityType>
+        <Function Name="crudEmp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+          <Parameter Name="EmpName" Type="varchar" Mode="In" />
+          <Parameter Name="Salary" Type="float" Mode="In" />
+          <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="insertInto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpName" Type="varchar" Mode="In" />
+          <Parameter Name="Salary" Type="float" Mode="In" />
+        </Function>
+        <Function Name="selectTbl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="updateTbl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+          <Parameter Name="EmpName" Type="varchar" Mode="In" />
+          <Parameter Name="Salary" Type="float" Mode="In" />
+        </Function>
+        <EntityContainer Name="EmployeeDbModelStoreContainer">
+          <EntitySet Name="SW_TBL_EMPLOYEE" EntityType="Self.SW_TBL_EMPLOYEE" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SW_TBL_EMPLOYEE].[EmpId] AS [EmpId], 
+    [SW_TBL_EMPLOYEE].[EmpName] AS [EmpName], 
+    [SW_TBL_EMPLOYEE].[Salary] AS [Salary]
+    FROM [dbo].[SW_TBL_EMPLOYEE] AS [SW_TBL_EMPLOYEE]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="SW_TBL_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Double" />
+        </EntityType>
+        <EntityContainer Name="EmployeeDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SW_TBL_EMPLOYEE" EntityType="Self.SW_TBL_EMPLOYEE" />
+          <FunctionImport Name="crudEmp" ReturnType="Collection(EmployeeDbModel.crudEmp_Result)">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="EmpName" Mode="In" Type="String" />
+            <Parameter Name="Salary" Mode="In" Type="Double" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="insertInto">
+            <Parameter Name="EmpName" Mode="In" Type="String" />
+            <Parameter Name="Salary" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="selectTbl" ReturnType="Collection(EmployeeDbModel.selectTbl_Result)" />
+          <FunctionImport Name="updateTbl">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="EmpName" Mode="In" Type="String" />
+            <Parameter Name="Salary" Mode="In" Type="Double" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="crudEmp_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="Salary" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="selectTbl_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="Salary" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeDbModelStoreContainer" CdmEntityContainer="EmployeeDbEntities">
+          <EntitySetMapping Name="SW_TBL_EMPLOYEE">
+            <EntityTypeMapping TypeName="EmployeeDbModel.SW_TBL_EMPLOYEE">
+              <MappingFragment StoreEntitySet="SW_TBL_EMPLOYEE">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="crudEmp" FunctionName="EmployeeDbModel.Store.crudEmp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDbModel.crudEmp_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="insertInto" FunctionName="EmployeeDbModel.Store.insertInto" />
+          <FunctionImportMapping FunctionImportName="selectTbl" FunctionName="EmployeeDbModel.Store.selectTbl">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDbModel.selectTbl_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="updateTbl" FunctionName="EmployeeDbModel.Store.updateTbl" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

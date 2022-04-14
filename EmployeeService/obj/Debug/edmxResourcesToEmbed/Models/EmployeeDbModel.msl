@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EmployeeDbModelStoreContainer" CdmEntityContainer="EmployeeDbEntities">
+    <EntitySetMapping Name="SW_TBL_EMPLOYEE">
+      <EntityTypeMapping TypeName="EmployeeDbModel.SW_TBL_EMPLOYEE">
+        <MappingFragment StoreEntitySet="SW_TBL_EMPLOYEE">
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="crudEmp" FunctionName="EmployeeDbModel.Store.crudEmp">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EmployeeDbModel.crudEmp_Result">
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="insertInto" FunctionName="EmployeeDbModel.Store.insertInto" />
+    <FunctionImportMapping FunctionImportName="selectTbl" FunctionName="EmployeeDbModel.Store.selectTbl">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EmployeeDbModel.selectTbl_Result">
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="updateTbl" FunctionName="EmployeeDbModel.Store.updateTbl" />
+  </EntityContainerMapping>
+</Mapping>

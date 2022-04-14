@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EmployeeDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EmployeeDb.dbo.SW_TBL_EMPLOYEE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SW_TBL_EMPLOYEE">
+    <Key>
+      <PropertyRef Name="EmpId" />
+    </Key>
+    <Property Name="EmpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpName" Type="varchar" MaxLength="250" />
+    <Property Name="Salary" Type="float" />
+  </EntityType>
+  <Function Name="crudEmp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpId" Type="int" Mode="In" />
+    <Parameter Name="EmpName" Type="varchar" Mode="In" />
+    <Parameter Name="Salary" Type="float" Mode="In" />
+    <Parameter Name="Option" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="insertInto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpName" Type="varchar" Mode="In" />
+    <Parameter Name="Salary" Type="float" Mode="In" />
+  </Function>
+  <Function Name="selectTbl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="updateTbl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpId" Type="int" Mode="In" />
+    <Parameter Name="EmpName" Type="varchar" Mode="In" />
+    <Parameter Name="Salary" Type="float" Mode="In" />
+  </Function>
+  <EntityContainer Name="EmployeeDbModelStoreContainer">
+    <EntitySet Name="SW_TBL_EMPLOYEE" EntityType="Self.SW_TBL_EMPLOYEE" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SW_TBL_EMPLOYEE].[EmpId] AS [EmpId], 
+    [SW_TBL_EMPLOYEE].[EmpName] AS [EmpName], 
+    [SW_TBL_EMPLOYEE].[Salary] AS [Salary]
+    FROM [dbo].[SW_TBL_EMPLOYEE] AS [SW_TBL_EMPLOYEE]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

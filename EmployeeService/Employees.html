@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            margin: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .firstblock {
+            width: 50%;
+            height: 100vh;
+            float: left;
+            background-color: white;
+        }
+
+        .secondblock {
+            width: 50%;
+            height: 100vh;
+            float: right;
+            align-content: center;
+            position: relative;
+            background-color: #F6F6F7;
+        }
+
+        .add {
+            padding-left: 2.5vw;
+        }
+
+        .title {
+            padding-top: 4vh;
+            padding-left: 4vw;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: left;
+            letter-spacing: 2px;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top:3vh;
+            padding: 0;
+            width:43%;
+            table-layout: fixed;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 800px) {
+        }
+
+        .button-24 {
+            display: inline-flex;
+            height: 30px;
+            width: 140px;
+            border: 2px solid black;
+            margin: 20px 20px 20px 20px;
+            color: black;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: .6em;
+            letter-spacing: 1.5px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+            .button-24:hover,
+            .button-24:active {
+                background-position: 0 0;
+                color: #BFC0C0;
+            }
+
+            .button-24:active {
+                opacity: .5;
+            }
+    </style>
+</head>
+<body>
+    <h2 class="title">Employee Details</h2>
+
+    <div class="firstblock">
+        <table id="tab1">
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>SALARY(Rs)</th>
+            </tr>
+
+        </table>
+    </div>
+    <div class="secondblock">
+        ID     : <input type="text" name="EmpId" id="EmpId" value="" /><br />
+        Name   : <input type="text" name="EmpName" id="EmpName" value="" /><br />
+        Salary : <input type="text" name="Salary" id="Salary" value="" /><br />
+        <a class="add"><button class="button-24" name="btn" id="btn1" role="button">Add New Employee</button></a>
+        <a class="add"><button class="button-24" name="btn3" id="btn3" role="button">Edit an Employee</button></a>
+    </div>
+    
+
+    <script>
+        $(document).ready(function () {
+
+            $("#tab1").css("display", "none");
+            $.getJSON("/api/NewApi/", function (data) {
+                $("#tab1").css("display", "block");
+                $.each(data, function (key, val) {
+                    $("<tr><td>" + val.EmpId + "</td><td>" + val.EmpName + "</td><td>" + val.Salary + "</td></tr>").appendTo($("#tab1"));
+
+
+                })
+            });
+
+            //POST
+            $("#btn1").click(function () {
+                var EmpName = $("#EmpName").val();
+                var Salary = $("#Salary").val();
+                $.ajax({
+
+                    type: "POST",
+
+                    contentType: "application/json;charset=utf-8",
+
+                    url: "/api/NewApi/",
+
+                    data: JSON.stringify({
+
+
+
+                        EmpName: $("#EmpName").val(),
+
+                        Salary: $("#Salary").val(),
+
+
+
+                    }),
+
+                    dataType: "JSON",
+
+                    success: function (data) {
+                        $("#tab1").find("tr:gt(0)").remove();
+                        $.getJSON("/api/NewApi/", function (data) {
+                            $("#tab1").css("display", "block");
+                            $.each(data, function (key, val) {
+                                $("<tr><td>" + val.EmpId + "</td><td>" + val.EmpName + "</td><td>" + val.Salary + "</td></tr>").appendTo($("#tab1"));
+
+
+                            })
+
+                        })
+
+
+
+                    }
+                });
+
+
+            });
+
+            //Update 
+            $("#btn3").click(function () {
+                var EmpId = $("#EmpId").val();
+                var Salary = $("#Salary").val();
+                var EmpName = $("#EmpName").val();
+                $.ajax({
+
+                    type: "put",
+
+                    contentType: "application/json;charset=utf-8",
+
+                    url: "/api/NewApi/" + $("#EmpId").val(),
+
+                    data: JSON.stringify({
+
+
+                        EmpId: $("#EmpId").val(),
+                        EmpName: $("#EmpName").val(),
+
+
+                        Salary: $("#Salary").val(),
+
+
+
+                    }),
+
+                    dataType: "JSON",
+
+                    success: function (data) {
+                        $("#tab1").find("tr:gt(0)").remove();
+                        $.getJSON("/api/NewApi/", function (data) {
+                            $("#tab1").css("display", "block");
+                            $.each(data, function (key, val) {
+                                $("<tr><td>" + val.EmpId + "</td><td>" + val.EmpName + "</td><td>" + val.Salary + "</td></tr>").appendTo($("#tab1"));
+
+
+                            })
+
+                        })
+
+
+
+                    }
+                });
+
+
+            });
+        });
+    </script>
+</body>
+</html>
